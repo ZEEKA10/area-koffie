@@ -9,7 +9,7 @@ if (isset($_POST['kategoriTambah'])) {
     mysqli_query($conn, $create);
     header("Location: ".$_SERVER['PHP_SELF']);
     exit;
-}
+}   
 
 // Hapus kategori
 if (isset($_POST['kategoriHapus'])) {

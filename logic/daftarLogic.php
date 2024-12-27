@@ -18,7 +18,7 @@ if (mysqli_query($conn, $queryDaftar)) {
     // Eksekusi query kedua jika query pertama berhasil
     echo "
     <script>
-    alert('Selamat Datang');
+    alert('Silahkan Login');
     window.location.href = '../views/login.php';
     </script>
     ";
