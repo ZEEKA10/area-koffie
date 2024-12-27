@@ -2,17 +2,16 @@
 session_start();
 require '../logic/koneksi.php';
 
-$email      = $_POST["email"];
-$pass       = md5($_POST["pass"]);
-$nama       = $_POST["nama"];
+$email = $_POST["email"];
+$pass = md5($_POST["password"]);
+$nama = $_POST["nama"];
 
-if($email == null) {
-    header("Location: ../index.php");
-exit();  // Pastikan skrip berhenti setelah redirect
+if (empty($email)) {
+    header("Location: ../views/login.php");
+    exit();  // Pastikan skrip berhenti setelah redirect
 }
 
-
-$queryDaftar = "INSERT INTO user VALUES ('$email','$nama','$pass')";
+$queryDaftar = "INSERT INTO user (email, nama, password) VALUES ('$email','$nama','$pass')";
 
 // Eksekusi query pertama
 if (mysqli_query($conn, $queryDaftar)) {
@@ -27,6 +26,4 @@ if (mysqli_query($conn, $queryDaftar)) {
     // Menampilkan error jika terjadi masalah dengan query pertama
     echo mysqli_error($conn);
 }
-
-
 ?>
