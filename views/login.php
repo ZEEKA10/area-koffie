@@ -20,14 +20,16 @@
                         <span class="label-text">Email</span>
                     </label>
                     <input type="email" id="email" placeholder="Enter your email"
-                        class="input input-bordered w-full max-w-xs" x-model="Email" name="email" required autocomplete="off" />
+                        class="input input-bordered w-full max-w-xs" x-model="Email" name="email" required
+                        autocomplete="off" />
                 </div>
                 <div class="form-control w-full max-w-xs mb-6">
                     <label class="label" for="password">
                         <span class="label-text">Password</span>
                     </label>
                     <input type="password" id="password" placeholder="Enter your password"
-                        class="input input-bordered w-full max-w-xs" x-model="password" name="pass" required autocomplete="new-password" />
+                        class="input input-bordered w-full max-w-xs" x-model="password" name="pass" required
+                        autocomplete="off" />
                 </div>
                 <div class="card-actions justify-end">
                     <a href="register.php" class="btn btn-primary">Register</a>

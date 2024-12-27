@@ -1,32 +1,32 @@
 <?php
+// berfungsi mengaktifkan session
 session_start();
-require '../logic/koneksi.php';
 
-// Retrieve form data
-$email = $_POST["email"];
-$pass = md5($_POST["password"]);
-$nama = $_POST["nama"];
+// berfungsi menghubungkan koneksi ke database
+require 'koneksi.php';
 
-// Check if the email is empty and redirect if so
-if (empty($email)) {
-    header("Location: ../index.php");
-    exit();
-}
+// berfungsi menangkap data yang dikirim
+$email = $_POST['email'];
+$pass = $_POST['pass'];
+$passmd5 = md5($pass);
+// berfungsi menyeleksi data user dengan username dan password yang sesuai
+$sql = mysqli_query($conn,"SELECT * FROM user  WHERE email = '$email' AND password ='$passmd5'");
+$cek = mysqli_num_rows($sql);		
 
-// Correct SQL query with column names matching the database schema
-$queryDaftar = "INSERT INTO user (email, nama, password) VALUES ('$email', '$nama', '$pass')";
 
-// Execute the query
-if (mysqli_query($conn, $queryDaftar)) {
-    // Redirect to login page with a success message if the query is successful
-    echo "
-    <script>
-    alert('Selamat Datang');
-    window.location.href = '../views/login.php';
-    </script>
-    ";
-} else {
-    // Display an error if the query fails
-    echo "Error: " . mysqli_error($conn);
-}
+// berfungsi mengecek apakah username dan password ada pada database
+if($cek > 0){
+	$data 		= mysqli_fetch_assoc($sql);	
+
+	$_SESSION['email']	=	$data['email'];
+	$_SESSION['nama'] 		= 	$data['nama'];	
+
+		echo "
+		<script>alert('Selamat Datang Admin {$data["nama"]}');
+        window.location.href = '../views/index.php'</script>
+		";
+}else{
+	echo mysqli_error($conn);
+	header("location:../index.php?alert=gagal");
+};
 ?>
