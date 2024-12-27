@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Coffee - Manage Menu Items</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-base-200 flex items-center justify-center min-h-screen p-4">
+    <div class="card w-full max-w-4xl bg-base-100 shadow-xl" x-data="{
+        idmenu: '',
+        idkategori: '',
+        nama_menu: '',
+        harga: '',
+        deskripsi: '',
+        foto: null,
+        categories: [
+            { id: 1, name: 'Coffee' },
+            { id: 2, name: 'Tea' },
+            { id: 3, name: 'Pastries' }
+        ],
+        menuItems: [
+            { id: 1, idkategori: 1, nama_menu: 'Espresso', harga: 15000, deskripsi: 'Strong black coffee', foto: 'espresso.jpg' },
+            { id: 2, idkategori: 2, nama_menu: 'Green Tea', harga: 12000, deskripsi: 'Refreshing green tea', foto: 'green-tea.jpg' },
+            { id: 3, idkategori: 3, nama_menu: 'Croissant', harga: 10000, deskripsi: 'Buttery, flaky pastry', foto: 'croissant.jpg' }
+        ],
+        isEditing: false,
+        resetForm() {
+            this.idmenu = '';
+            this.idkategori = '';
+            this.nama_menu = '';
+            this.harga = '';
+            this.deskripsi = '';
+            this.foto = null;
+            this.isEditing = false;
+        },
+        submitForm() {
+            if (this.isEditing) {
+                const index = this.menuItems.findIndex(item => item.id === this.idmenu);
+                if (index !== -1) {
+                    this.menuItems[index] = { 
+                        id: this.idmenu, 
+                        idkategori: this.idkategori, 
+                        nama_menu: this.nama_menu, 
+                        harga: parseFloat(this.harga), 
+                        deskripsi: this.deskripsi, 
+                        foto: this.foto ? URL.createObjectURL(this.foto) : this.menuItems[index].foto 
+                    };
+                }
+            } else {
+                this.menuItems.push({ 
+                    id: this.menuItems.length + 1, 
+                    idkategori: this.idkategori, 
+                    nama_menu: this.nama_menu, 
+                    harga: parseFloat(this.harga), 
+                    deskripsi: this.deskripsi, 
+                    foto: this.foto ? URL.createObjectURL(this.foto) : null 
+                });
+            }
+            this.resetForm();
+        },
+        editItem(item) {
+            this.idmenu = item.id;
+            this.idkategori = item.idkategori;
+            this.nama_menu = item.nama_menu;
+            this.harga = item.harga;
+            this.deskripsi = item.deskripsi;
+            this.isEditing = true;
+        },
+        deleteItem(id) {
+            this.menuItems = this.menuItems.filter(item => item.id !== id);
+            this.resetForm();
+        },
+        getCategoryName(id) {
+            const category = this.categories.find(c => c.id === id);
+            return category ? category.name : 'Unknown';
+        }
+    }">
+        <div class="card-body">
+            <h2 class="card-title justify-center mb-4" x-text="isEditing ? 'Edit Menu Item' : 'Add New Menu Item'"></h2>
+            <form @submit.prevent="submitForm">
+                <div class="form-control w-full mb-4">
+                    <label class="label" for="idkategori">
+                        <span class="label-text">Category</span>
+                    </label>
+                    <select id="idkategori" class="select select-bordered w-full" x-model="idkategori" required>
+                        <option value="">Select a category</option>
+                        <template x-for="category in categories" :key="category.id">
+                            <option :value="category.id" x-text="category.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <div class="form-control w-full mb-4">
+                    <label class="label" for="nama_menu">
+                        <span class="label-text">Menu Name</span>
+                    </label>
+                    <input type="text" id="nama_menu" placeholder="Enter menu name" class="input input-bordered w-full" x-model="nama_menu" required />
+                </div>
+                <div class="form-control w-full mb-4">
+                    <label class="label" for="harga">
+                        <span class="label-text">Price</span>
+                    </label>
+                    <input type="number" id="harga" placeholder="Enter price" class="input input-bordered w-full" x-model="harga" step="0.01" min="0" required />
+                </div>
+                <div class="form-control w-full mb-4">
+                    <label class="label" for="deskripsi">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <textarea id="deskripsi" placeholder="Enter description" class="textarea textarea-bordered w-full" x-model="deskripsi" required></textarea>
+                </div>
+                <div class="form-control w-full mb-6">
+                    <label class="label" for="foto">
+                        <span class="label-text">Photo</span>
+                    </label>
+                    <input type="file" id="foto" class="file-input file-input-bordered w-full" @change="foto = $event.target.files[0]" accept="image/*" />
+                </div>
+                <div class="card-actions justify-end">
+                    <button type="submit" class="btn btn-primary" x-text="isEditing ? 'Update Menu Item' : 'Add Menu Item'"></button>
+                    <button type="button" class="btn btn-secondary" @click="resetForm" x-show="isEditing">Cancel</button>
+                </div>
+            </form>
+
+            <div class="divider"></div>
+
+            <h3 class="text-lg font-semibold mb-2">Existing Menu Items</h3>
+            <div class="overflow-x-auto">
+                <table class="table w-full">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="item in menuItems" :key="item.id">
+                            <tr>
+                                <td x-text="item.nama_menu"></td>
+                                <td x-text="getCategoryName(item.idkategori)"></td>
+                                <td x-text="'Rp ' + item.harga.toLocaleString()"></td>
+                                <td>
+                                    <button @click="editItem(item)" class="btn btn-sm btn-info mr-2">Edit</button>
+                                    <button @click="deleteItem(item.id)" class="btn btn-sm btn-error">Delete</button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
