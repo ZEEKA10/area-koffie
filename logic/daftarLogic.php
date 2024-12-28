@@ -24,6 +24,7 @@ if (mysqli_query($conn, $queryDaftar)) {
     ";
 } else {
     // Menampilkan error jika terjadi masalah dengan query pertama
-    echo mysqli_error($conn);
+    $_SESSION['status'] = "Pendaftaran gagal: " . mysqli_error($conn);
+    header("Location: ../views/daftar.php");
 }
 ?>

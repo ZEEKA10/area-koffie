@@ -26,7 +26,7 @@ if($cek > 0){
         window.location.href = '../views/index.php'</script>
 		";
 }else{
-	echo mysqli_error($conn);
-	header("location:../index.php?alert=gagal");
+	$_SESSION['status'] = "Username atau Password anda salah " . mysqli_error($conn);
+	header("location:../index.php");
 };
 ?>
