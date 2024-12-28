@@ -78,7 +78,7 @@ while($category = mysqli_fetch_assoc($categoriesResult)) {
             <h2 class="text-3xl font-bold text-center mb-8">About Us</h2>
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0">
-                    <!-- <img src="{{ asset('koffi.jpg') }}" alt="Coffee Shop Interior" class="rounded-lg shadow-lg w-full"> -->
+                    <img src="src/img/koffi.jpg" alt="Coffee Shop Interior" class="rounded-lg shadow-lg w-full">
                 </div>
                 <div class="md:w-1/2 md:pl-8">
                     <p class="text-lg mb-4">Selamat datang di AREA KOFFIE, sebuah coffee shop yang memadukan keindahan
