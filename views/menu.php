@@ -2,6 +2,10 @@
 session_start();
 require '../logic/koneksi.php'; // Ensure you have a proper connection to your database  
 
+if($_SESSION['nama'] == "") {
+    header("location: login.php");
+}
+
 // Add new menu  
 if (isset($_POST['menuTambah'])) {  
     $idkategori = $_POST['idkategori'];  
@@ -99,7 +103,7 @@ if (isset($_SESSION['status'])) {
             </li>
             <li><a href="../views/menu.php" @click.prevent="currentPage = 'menu'"
                     class="text-white hover:underline">Menu</a></li>
-                    <li class="absolute right-6"><a href="../logic/logout.php" @click.prevent="currentPage = 'menu'"
+            <li class="absolute right-6"><a href="../logic/logout.php" @click.prevent="currentPage = 'menu'"
                     class="text-white hover:underline">Logout</a></li>
     </nav>
     <div class="bg-base-200 flex items-center justify-center min-h-screen p-4">
