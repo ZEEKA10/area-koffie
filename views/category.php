@@ -47,50 +47,61 @@ $selectSql = mysqli_query($conn, $select);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-base-200 flex items-center justify-center min-h-screen p-4">
+<body >
     <!-- Container Card -->
-    <div class="card w-full max-w-lg bg-base-100 shadow-xl">
-        <div class="card-body">
-            <h2 class="card-title justify-center mb-4">Manage Categories</h2>
-            <!-- Form Tambah Kategori -->
-            <form method="post" action="">
-                <div class="form-control w-full mb-4">
-                    <label class="label" for="newCategory">
-                        <span class="label-text">New Category Name</span>
-                    </label>
-                    <div class="flex space-x-2">
-                        <input type="text" id="newCategory" placeholder="Enter category name"
-                            class="input input-bordered w-full" name="kategoriTambah" required />
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </div>
-                </div>
-            </form>
-            <div class="divider"></div>
-            <!-- Tampilkan Kategori -->
-            <h3 class="text-lg font-semibold mb-2">Existing Categories</h3>
-            <ul class="space-y-2">
-                <?php while ($data = mysqli_fetch_assoc($selectSql)) { ?>
-                <li class="flex justify-between items-center">
-                    <span><?= htmlspecialchars($data['nama_kategori']); ?></span>
-                    <div class="space-x-2">
-                        <!-- Form Edit -->
-                        <form method="post" action="" class="inline">
-                            <input type="hidden" name="kategoriEdit" value="<?= $data['id_kategori']; ?>">
-                            <input type="text" name="kategoriBaru" placeholder="New name"
-                                class="input input-bordered input-sm" required>
-                            <button type="submit" class="btn btn-sm btn-success">Save</button>
-                        </form>
-                        <!-- Form Delete -->
-                        <form method="post" action="" class="inline">
-                            <input type="hidden" name="kategoriHapus" value="<?= $data['id_kategori']; ?>">
-                            <button type="submit" class="btn btn-sm btn-error">Delete</button>
-                        </form>
-                    </div>
-                </li>
-                <?php } ?>
-            </ul>
-        </div>
-    </div>
+    <nav class="bg-gray-800 p-4">
+        <ul class="flex space-x-4">
+            <li><a  href="../views/index.php"  @click.prevent="currentPage = 'dashboard'" class="text-white hover:underline">Dashboard</a>
+            </li>
+            <li><a href="../views/menu.php" @click.prevent="currentPage = 'menu'"
+                    class="text-white hover:underline">Menu</a></li>
+            <li><a href="..views/category.php" @click.prevent="currentPage = 'categories'"
+                    class="text-white hover:underline">Categories</a></li>
+    </nav>  
+     <div class="bg-base-200 flex items-center justify-center min-h-screen p-4">
+         <div class="card w-full max-w-lg bg-base-100 shadow-xl">
+             <div class="card-body">
+                 <h2 class="card-title justify-center mb-4">Manage Categories</h2>
+                 <!-- Form Tambah Kategori -->
+                 <form method="post" action="">
+                     <div class="form-control w-full mb-4">
+                         <label class="label" for="newCategory">
+                             <span class="label-text">New Category Name</span>
+                         </label>
+                         <div class="flex space-x-2">
+                             <input type="text" id="newCategory" placeholder="Enter category name"
+                                 class="input input-bordered w-full" name="kategoriTambah" required />
+                             <button type="submit" class="btn btn-primary">Add</button>
+                         </div>
+                     </div>
+                 </form>
+                 <div class="divider"></div>
+                 <!-- Tampilkan Kategori -->
+                 <h3 class="text-lg font-semibold mb-2">Existing Categories</h3>
+                 <ul class="space-y-2">
+                     <?php while ($data = mysqli_fetch_assoc($selectSql)) { ?>
+                     <li class="flex justify-between items-center">
+                         <span><?= htmlspecialchars($data['nama_kategori']); ?></span>
+                         <div class="space-x-2">
+                             <!-- Form Edit -->
+                             <form method="post" action="" class="inline">
+                                 <input type="hidden" name="kategoriEdit" value="<?= $data['id_kategori']; ?>">
+                                 <input type="text" name="kategoriBaru" placeholder="New name"
+                                     class="input input-bordered input-sm" required>
+                                 <button type="submit" class="btn btn-sm btn-success">Save</button>
+                             </form>
+                             <!-- Form Delete -->
+                             <form method="post" action="" class="inline">
+                                 <input type="hidden" name="kategoriHapus" value="<?= $data['id_kategori']; ?>">
+                                 <button type="submit" class="btn btn-sm btn-error">Delete</button>
+                             </form>
+                         </div>
+                     </li>
+                     <?php } ?>
+                 </ul>
+             </div>
+         </div>
+     </div>
 </body>
 
 </html>

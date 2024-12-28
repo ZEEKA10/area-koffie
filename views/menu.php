@@ -79,119 +79,130 @@ $selectKategoriSql = mysqli_query($conn, $selectKategori);
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />  
     <script src="https://cdn.tailwindcss.com"></script>  
 </head>  
-<body class="bg-base-200 flex items-center justify-center min-h-screen p-4">  
-    <div class="card w-full max-w-4xl bg-base-100 shadow-xl">  
-        <div class="card-body">  
-            <h2 class="card-title justify-center mb-4">Manage Menu Items</h2>  
-            <form method="post" action="" enctype="multipart/form-data">  
-                <div class="form-control w-full mb-4">  
-                    <label class="label" for="idkategori">  
-                        <span class="label-text">Category</span>  
-                    </label>  
-                    <select id="idkategori" class="select select-bordered w-full" name="idkategori" required>  
-                        <option value="">Select a category</option>  
-                        <?php while ($kategori = mysqli_fetch_assoc($selectKategoriSql)) { ?>  
-                            <option value="<?= htmlspecialchars($kategori['id_kategori']); ?>"   
-                                <?= isset($editMenu) && $editMenu['id_kategori'] == $kategori['id_kategori'] ? 'selected' : '' ?>>  
-                                <?= htmlspecialchars($kategori['nama_kategori']); ?>  
-                            </option>  
-                        <?php } ?>  
-                    </select>  
-                </div>  
-                <div class="form-control w-full mb-4">  
-                    <label class="label" for="nama_menu">  
-                        <span class="label-text">Menu Name</span>  
-                    </label>  
-                    <input type="text" id="nama_menu" placeholder="Enter menu name" class="input input-bordered w-full" name="nama_menu" required   
-                        value="<?= isset($editMenu) ? htmlspecialchars($editMenu['nama_menu']) : ''; ?>" />  
-                </div>  
-                <div class="form-control w-full mb-4">  
-                    <label class="label" for="harga">  
-                        <span class="label-text">Price</span>  
-                    </label>  
-                    <input type="number" id="harga" placeholder="Enter price" class="input input-bordered w-full" name="harga" step="0.01" min="0" required   
-                        value="<?= isset($editMenu) ? htmlspecialchars($editMenu['harga']) : ''; ?>" />  
-                </div>  
-                <div class="form-control w-full mb-4">  
-                    <label class="label" for="deskripsi">  
-                        <span class="label-text">Description</span>  
-                    </label>  
-                    <textarea id="deskripsi" placeholder="Enter description" class="textarea textarea-bordered w-full" name="deskripsi" required><?= isset($editMenu) ? htmlspecialchars($editMenu['deskripsi']) : ''; ?></textarea>  
-                </div>  
-                <div class="form-control w-full mb-6">  
-                    <label class="label" for="foto">  
-                        <span class="label-text">Photo</span>  
-                    </label>  
-                    <input type="file" id="foto" class="file-input file-input-bordered w-full" name="foto" accept="image/*" />  
-                    <?php if (isset($editMenu) && $editMenu['foto']): ?>  
-                        <p>Current photo: <img src="../src/uploads/<?= htmlspecialchars($editMenu['foto']); ?>" alt="<?= htmlspecialchars($editMenu['nama_menu']); ?>" width="50"></p>  
-                    <?php endif; ?>  
-                </div>  
-                <div class="card-actions justify-end">  
-                    <button type="submit" name="<?= isset($editMenu) ? 'menuEdit' : 'menuTambah'; ?>" class="btn btn-primary">  
-                        <?= isset($editMenu) ? 'Update Menu Item' : 'Add Menu Item'; ?>  
-                    </button>  
-                    <?php if (isset($editMenu)): ?>  
-                        <input type="hidden" name="id_menu" value="<?= htmlspecialchars($editMenu['id_menu']); ?>">  
-                        <input type="hidden" name="fotoLama" value="<?= htmlspecialchars($editMenu['foto']); ?>">  
-                    <?php endif; ?>  
-                </div>  
-            </form>  
-            
-            <div class="divider"></div>  
-            <h3 class="text-lg font-semibold mb-2">Existing Menu Items</h3>  
-            <div class="overflow-x-auto">  
-                <table class="table w-full">  
-                    <thead>  
-                        <tr>  
-                            <th>Name</th>  
-                            <th>Category</th>  
-                            <th>Price</th>  
-                            <th>Description</th>  
-                            <th>Photo</th>  
-                            <th>Actions</th>  
-                        </tr>  
-                    </thead>  
-                    <tbody>  
-                        <?php while ($menu = mysqli_fetch_assoc($selectMenuSql)) { ?>  
+<body>
+<nav class="bg-gray-800 p-4">
+        <ul class="flex space-x-4">
+            <li><a href="../views/index.php" @click.prevent="currentPage = 'dashboard'" class="text-white hover:underline">Dashboard</a>
+            </li>
+            <li><a href="../views/menu.php" @click.prevent="currentPage = 'menu'"
+                    class="text-white hover:underline">Menu</a></li>
+            <li><a href="../views/category.php" @click.prevent="currentPage = 'categories'"
+                    class="text-white hover:underline">Categories</a></li>
+    </nav>  
+    <div class="bg-base-200 flex items-center justify-center min-h-screen p-4">
+        <div class="card w-full max-w-4xl bg-base-100 shadow-xl">  
+            <div class="card-body">  
+                <h2 class="card-title justify-center mb-4">Manage Menu Items</h2>  
+                <form method="post" action="" enctype="multipart/form-data">  
+                    <div class="form-control w-full mb-4">  
+                        <label class="label" for="idkategori">  
+                            <span class="label-text">Category</span>  
+                        </label>  
+                        <select id="idkategori" class="select select-bordered w-full" name="idkategori" required>  
+                            <option value="">Select a category</option>  
+                            <?php while ($kategori = mysqli_fetch_assoc($selectKategoriSql)) { ?>  
+                                <option value="<?= htmlspecialchars($kategori['id_kategori']); ?>"   
+                                    <?= isset($editMenu) && $editMenu['id_kategori'] == $kategori['id_kategori'] ? 'selected' : '' ?>>  
+                                    <?= htmlspecialchars($kategori['nama_kategori']); ?>  
+                                </option>  
+                            <?php } ?>  
+                        </select>  
+                    </div>  
+                    <div class="form-control w-full mb-4">  
+                        <label class="label" for="nama_menu">  
+                            <span class="label-text">Menu Name</span>  
+                        </label>  
+                        <input type="text" id="nama_menu" placeholder="Enter menu name" class="input input-bordered w-full" name="nama_menu" required   
+                            value="<?= isset($editMenu) ? htmlspecialchars($editMenu['nama_menu']) : ''; ?>" />  
+                    </div>  
+                    <div class="form-control w-full mb-4">  
+                        <label class="label" for="harga">  
+                            <span class="label-text">Price</span>  
+                        </label>  
+                        <input type="number" id="harga" placeholder="Enter price" class="input input-bordered w-full" name="harga" step="0.01" min="0" required   
+                            value="<?= isset($editMenu) ? htmlspecialchars($editMenu['harga']) : ''; ?>" />  
+                    </div>  
+                    <div class="form-control w-full mb-4">  
+                        <label class="label" for="deskripsi">  
+                            <span class="label-text">Description</span>  
+                        </label>  
+                        <textarea id="deskripsi" placeholder="Enter description" class="textarea textarea-bordered w-full" name="deskripsi" required><?= isset($editMenu) ? htmlspecialchars($editMenu['deskripsi']) : ''; ?></textarea>  
+                    </div>  
+                    <div class="form-control w-full mb-6">  
+                        <label class="label" for="foto">  
+                            <span class="label-text">Photo</span>  
+                        </label>  
+                        <input type="file" id="foto" class="file-input file-input-bordered w-full" name="foto" accept="image/*" />  
+                        <?php if (isset($editMenu) && $editMenu['foto']): ?>  
+                            <p>Current photo: <img src="../src/uploads/<?= htmlspecialchars($editMenu['foto']); ?>" alt="<?= htmlspecialchars($editMenu['nama_menu']); ?>" width="50"></p>  
+                        <?php endif; ?>  
+                    </div>  
+                    <div class="card-actions justify-end">  
+                        <button type="submit" name="<?= isset($editMenu) ? 'menuEdit' : 'menuTambah'; ?>" class="btn btn-primary">  
+                            <?= isset($editMenu) ? 'Update Menu Item' : 'Add Menu Item'; ?>  
+                        </button>  
+                        <?php if (isset($editMenu)): ?>  
+                            <input type="hidden" name="id_menu" value="<?= htmlspecialchars($editMenu['id_menu']); ?>">  
+                            <input type="hidden" name="fotoLama" value="<?= htmlspecialchars($editMenu['foto']); ?>">  
+                        <?php endif; ?>  
+                    </div>  
+                </form>  
+                
+                <div class="divider"></div>  
+                <h3 class="text-lg font-semibold mb-2">Existing Menu Items</h3>  
+                <div class="overflow-x-auto">  
+                    <table class="table w-full">  
+                        <thead>  
                             <tr>  
-                                <td><?= htmlspecialchars($menu['nama_menu']); ?></td>  
-                                <td>  
-                                    <?php   
-                                    $idkategori = htmlspecialchars($menu['id_kategori']);  
-                                    $kategoriQuery = "SELECT nama_kategori FROM kategori WHERE id_kategori = '$idkategori'";  
-                                    $kategoriResult = mysqli_query($conn, $kategoriQuery);  
-                                    $kategoriName = mysqli_fetch_assoc($kategoriResult)['nama_kategori'];  
-                                    echo htmlspecialchars($kategoriName);   
-                                    ?>  
-                                </td>  
-                                <td><?= htmlspecialchars(number_format($menu['harga'], 2)); ?></td>  
-                                <td><?= htmlspecialchars($menu['deskripsi']); ?></td> <!-- Display Description -->  
-                                <td>  
-                                    <?php if ($menu['foto']): ?>  
-                                        <img src="../src/uploads/<?= htmlspecialchars($menu['foto']); ?>" alt="<?= htmlspecialchars($menu['nama_menu']); ?>" width="50">  
-                                    <?php else: ?>  
-                                        No photo  
-                                    <?php endif; ?>  
-                                </td>  
-                                <td>  
-                                    <!-- Form Edit -->  
-                                    <form method="post" action="" enctype="multipart/form-data" class="inline">  
-                                        <input type="hidden" name="menuEdit" value="<?= htmlspecialchars($menu['id_menu']); ?>">  
-                                        <button type="submit" class="btn btn-sm btn-info">Edit</button>  
-                                    </form>  
-                                    <!-- Form Delete -->  
-                                    <form method="post" action="" class="inline">  
-                                        <input type="hidden" name="menuHapus" value="<?= htmlspecialchars($menu['id_menu']); ?>">  
-                                        <button type="submit" class="btn btn-sm btn-error">Delete</button>  
-                                    </form>  
-                                </td>  
+                                <th>Name</th>  
+                                <th>Category</th>  
+                                <th>Price</th>  
+                                <th>Description</th>  
+                                <th>Photo</th>  
+                                <th>Actions</th>  
                             </tr>  
-                        <?php } ?>  
-                    </tbody>  
-                </table>  
+                        </thead>  
+                        <tbody>  
+                            <?php while ($menu = mysqli_fetch_assoc($selectMenuSql)) { ?>  
+                                <tr>  
+                                    <td><?= htmlspecialchars($menu['nama_menu']); ?></td>  
+                                    <td>  
+                                        <?php   
+                                        $idkategori = htmlspecialchars($menu['id_kategori']);  
+                                        $kategoriQuery = "SELECT nama_kategori FROM kategori WHERE id_kategori = '$idkategori'";  
+                                        $kategoriResult = mysqli_query($conn, $kategoriQuery);  
+                                        $kategoriName = mysqli_fetch_assoc($kategoriResult)['nama_kategori'];  
+                                        echo htmlspecialchars($kategoriName);   
+                                        ?>  
+                                    </td>  
+                                    <td><?= htmlspecialchars(number_format($menu['harga'], 2)); ?></td>  
+                                    <td><?= htmlspecialchars($menu['deskripsi']); ?></td> <!-- Display Description -->  
+                                    <td>  
+                                        <?php if ($menu['foto']): ?>  
+                                            <img src="../src/uploads/<?= htmlspecialchars($menu['foto']); ?>" alt="<?= htmlspecialchars($menu['nama_menu']); ?>" width="50">  
+                                        <?php else: ?>  
+                                            No photo  
+                                        <?php endif; ?>  
+                                    </td>  
+                                    <td>  
+                                        <!-- Form Edit -->  
+                                        <form method="post" action="" enctype="multipart/form-data" class="inline">  
+                                            <input type="hidden" name="menuEdit" value="<?= htmlspecialchars($menu['id_menu']); ?>">  
+                                            <button type="submit" class="btn btn-sm btn-info">Edit</button>  
+                                        </form>  
+                                        <!-- Form Delete -->  
+                                        <form method="post" action="" class="inline">  
+                                            <input type="hidden" name="menuHapus" value="<?= htmlspecialchars($menu['id_menu']); ?>">  
+                                            <button type="submit" class="btn btn-sm btn-error">Delete</button>  
+                                        </form>  
+                                    </td>  
+                                </tr>  
+                            <?php } ?>  
+                        </tbody>  
+                    </table>  
+                </div>  
             </div>  
         </div>  
-    </div>  
+    </div>
 </body>  
 </html>
