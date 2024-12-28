@@ -70,8 +70,8 @@ if (isset($_SESSION['status'])) {
             <li>
                 <p class="text-white">Area Koffie</p>
             </li>
-            <li><a href="menu.php" @click.prevent="currentPage = 'menu'"
-                    class="text-white hover:underline">Menu</a></li>
+            <li><a href="menu.php" @click.prevent="currentPage = 'menu'" class="text-white hover:underline">Menu</a>
+            </li>
             <li class="absolute right-6"><a href="../logic/logout.php" @click.prevent="currentPage = 'menu'"
                     class="text-white hover:underline">Logout</a></li>
     </nav>

@@ -2360,6 +2360,10 @@ html {
   top: 1rem;
 }
 
+.right-6 {
+  right: 1.5rem;
+}
+
 .z-10 {
   z-index: 10;
 }
