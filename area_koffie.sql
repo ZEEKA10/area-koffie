@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Des 2024 pada 21.01
+-- Waktu pembuatan: 27 Des 2024 pada 22.12
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -37,7 +37,11 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
-(1, '');
+(2, 'Ayam'),
+(3, 'Makanan'),
+(4, 'Makanan'),
+(5, 'Kopi'),
+(17, 'Biasa');
 
 -- --------------------------------------------------------
 
@@ -49,6 +53,7 @@ CREATE TABLE `menu` (
   `id_menu` int(11) NOT NULL,
   `nama_menu` varchar(255) NOT NULL,
   `id_kategori` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
   `deskripsi` text NOT NULL,
   `foto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -109,7 +114,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu`
