@@ -95,10 +95,12 @@ if (isset($_SESSION['status'])) {
 <body>
     <nav class="bg-gray-800 p-4">
         <ul class="flex space-x-4">
-            <li><a href="../views/index.php" class="text-white hover:underline">Dashboard</a>
+            <li><a href="../views/index.php" class="text-white hover:underline">Category</a>
             </li>
             <li><a href="../views/menu.php" @click.prevent="currentPage = 'menu'"
                     class="text-white hover:underline">Menu</a></li>
+                    <li class="absolute right-6"><a href="../logic/logout.php" @click.prevent="currentPage = 'menu'"
+                    class="text-white hover:underline">Logout</a></li>
     </nav>
     <div class="bg-base-200 flex items-center justify-center min-h-screen p-4">
         <!-- Alert Section -->
