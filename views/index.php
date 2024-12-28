@@ -1,12 +1,18 @@
 <?php 
+session_start();
 
 require '../logic/koneksi.php';
+
+if($_SESSION['nama'] == "") {
+    header("location: login.php");
+}
 
 // Tambahkan kategori baru
 if (isset($_POST['kategoriTambah'])) {
     $kategori = $_POST['kategoriTambah'];
     $create = "INSERT INTO kategori (id_kategori, nama_kategori) VALUES (NULL, '$kategori')";
     mysqli_query($conn, $create);
+    $_SESSION['status'] = "Data telah ditambah";
     header("Location: ".$_SERVER['PHP_SELF']);
     exit;
 }   
@@ -16,6 +22,7 @@ if (isset($_POST['kategoriHapus'])) {
     $id = $_POST['kategoriHapus'];
     $delete = "DELETE FROM kategori WHERE id_kategori = '$id'";
     mysqli_query($conn, $delete);
+    $_SESSION['status'] = "Data telah dihapus";
     header("Location: ".$_SERVER['PHP_SELF']);
     exit;
 }
@@ -28,11 +35,20 @@ if (isset($_POST['kategoriEdit']) && isset($_POST['kategoriBaru'])) {
     mysqli_query($conn, $update);
     header("Location: ".$_SERVER['PHP_SELF']);
     exit;
+    
 }
 
 // Ambil semua kategori
 $select = "SELECT * FROM kategori";
 $selectSql = mysqli_query($conn, $select);
+
+if (isset($_SESSION['status'])) {
+    $statusMessage = $_SESSION['status'];
+    unset($_SESSION['status']); // Hapus session setelah digunakan
+} else {
+    $statusMessage = null;
+}
+
 
 ?>
 
@@ -57,6 +73,31 @@ $selectSql = mysqli_query($conn, $select);
             <li><a href="../views/menu.php" @click.prevent="currentPage = 'menu'"
                     class="text-white hover:underline">Menu</a></li>
     </nav>
+
+    <!-- Alert Section -->
+    <?php if ($statusMessage): ?>
+    <div id="alert-box" role="alert" class="alert shadow-lg fixed right-0 top-4 p-4 max-w-md w-full bg-white"
+        style="z-index: 9999;">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    class="stroke-info h-6 w-6 shrink-0 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-gray-800"><?= htmlspecialchars($statusMessage); ?></span>
+            </div>
+            <button id="close-alert" class="btn btn-sm btn-error absolute right-3">Close</button>
+        </div>
+    </div>
+    <script>
+    document.getElementById('close-alert').addEventListener('click', function() {
+        const alertBox = document.getElementById('alert-box');
+        alertBox.style.display = 'none'; // Hide the alert
+    });
+    </script>
+    <?php endif; ?>
+
     <div class="bg-base-200 flex items-center justify-center min-h-screen p-4">
         <div class="card w-full max-w-lg bg-base-100 shadow-xl">
             <div class="card-body">
