@@ -21,15 +21,15 @@ if (isset($_SESSION['status'])) {
 <body x-data="{ currentPage: 'dashboard' }">
 
 
-    <nav class="bg-gray-800 p-4">
+<nav class="bg-gray-800 p-4">
         <ul class="flex space-x-4">
-            <li><a href="../views//index.php" @click.prevent="currentPage = 'dashboard'" class="text-white hover:underline">Dashboard</a>
+            <li><a  href="/index.php"  @click.prevent="currentPage = 'dashboard'" class="text-white hover:underline">Dashboard</a>
             </li>
-            <li><a href="../views/menu.php" @click.prevent="currentPage = 'menu'"
+            <li><a href="menu.php" @click.prevent="currentPage = 'menu'"
                     class="text-white hover:underline">Menu</a></li>
-            <li><a href="../views/category.php" @click.prevent="currentPage = 'categories'"
+            <li><a href="category.php" @click.prevent="currentPage = 'categories'"
                     class="text-white hover:underline">Categories</a></li>
-    </nav>
+    </nav>  
 
     <!-- Alert Section -->
     <?php if ($statusMessage): ?>
