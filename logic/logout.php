@@ -12,5 +12,5 @@ session_destroy();
 session_start();
     // berfungsi mengalihkan halaman ke halaman login
     $_SESSION['status'] = "Anda Telah Logout";
-    header("location:../views/login.php'");
+    header("location:../views/login.php");
 ?>

@@ -12,16 +12,14 @@ if (empty($email)) {
 }
 
 $queryDaftar = "INSERT INTO user (email, nama, password) VALUES ('$email','$nama','$pass')";
+$sqlDaftar = mysqli_query($conn, $queryDaftar);
 
 // Eksekusi query pertama
-if (mysqli_query($conn, $queryDaftar)) {
+if ($sqlDaftar == true) {
     // Eksekusi query kedua jika query pertama berhasil
-    echo "
-    <script>
-    alert('Silahkan Login');
-    window.location.href = '../views/login.php';
-    </script>
-    ";
+
+    $_SESSION['status'] = "Selamat anda telah terdaftar";
+	header("location:../views/login.php");
 } else {
     // Menampilkan error jika terjadi masalah dengan query pertama
     $_SESSION['status'] = "Pendaftaran gagal: " . mysqli_error($conn);

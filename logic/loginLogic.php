@@ -21,12 +21,10 @@ if($cek > 0){
 	$_SESSION['email']	=	$data['email'];
 	$_SESSION['nama'] 		= 	$data['nama'];	
 
-		echo "
-		<script>alert('Selamat Datang Admin {$data["nama"]}');
-        window.location.href = '../views/index.php'</script>
-		";
+	$_SESSION['status'] = "Selamat datang Admin" . $_SESSION['nama'];
+	header("location:../views/index.php");
 }else{
 	$_SESSION['status'] = "Username atau Password anda salah " . mysqli_error($conn);
-	header("location:../index.php");
+	header("location:../views/login.php");
 };
 ?>
