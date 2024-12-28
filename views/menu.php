@@ -92,16 +92,14 @@ if (isset($_SESSION['status'])) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body >
-<nav class="bg-gray-800 p-4">
+<body>
+    <nav class="bg-gray-800 p-4">
         <ul class="flex space-x-4">
-            <li><a href="../views/index.php" @click.prevent="currentPage = 'dashboard'" class="text-white hover:underline">Dashboard</a>
+            <li><a href="../views/index.php" class="text-white hover:underline">Dashboard</a>
             </li>
             <li><a href="../views/menu.php" @click.prevent="currentPage = 'menu'"
                     class="text-white hover:underline">Menu</a></li>
-            <li><a href="../views/category.php" @click.prevent="currentPage = 'categories'"
-                    class="text-white hover:underline">Categories</a></li>
-    </nav>  
+    </nav>
     <div class="bg-base-200 flex items-center justify-center min-h-screen p-4">
         <!-- Alert Section -->
         <?php if ($statusMessage): ?>
@@ -148,8 +146,8 @@ if (isset($_SESSION['status'])) {
                         <label class="label" for="nama_menu">
                             <span class="label-text">Menu Name</span>
                         </label>
-                        <input type="text" id="nama_menu" placeholder="Enter menu name" class="input input-bordered w-full"
-                            name="nama_menu" required
+                        <input type="text" id="nama_menu" placeholder="Enter menu name"
+                            class="input input-bordered w-full" name="nama_menu" required
                             value="<?= isset($editMenu) ? htmlspecialchars($editMenu['nama_menu']) : ''; ?>" />
                     </div>
                     <div class="form-control w-full mb-4">
@@ -164,8 +162,8 @@ if (isset($_SESSION['status'])) {
                         <label class="label" for="deskripsi">
                             <span class="label-text">Description</span>
                         </label>
-                        <textarea id="deskripsi" placeholder="Enter description" class="textarea textarea-bordered w-full"
-                            name="deskripsi"
+                        <textarea id="deskripsi" placeholder="Enter description"
+                            class="textarea textarea-bordered w-full" name="deskripsi"
                             required><?= isset($editMenu) ? htmlspecialchars($editMenu['deskripsi']) : ''; ?></textarea>
                     </div>
                     <div class="form-control w-full mb-6">
@@ -190,7 +188,7 @@ if (isset($_SESSION['status'])) {
                         <?php endif; ?>
                     </div>
                 </form>
-    
+
                 <div class="divider"></div>
                 <h3 class="text-lg font-semibold mb-2">Existing Menu Items</h3>
                 <div class="overflow-x-auto">
