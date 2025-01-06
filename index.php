@@ -125,12 +125,12 @@ while($category = mysqli_fetch_assoc($categoriesResult)) {
                 </div>
                 <div class="md:w-1/2 md:pl-8">
                     <h3 class="text-xl font-semibold mb-4">Visit Us</h3>
-                    <p class="mb-2">123 Coffee Street, Java City</p>
-                    <p class="mb-2">Phone: (123) 456-7890</p>
-                    <p class="mb-4">Email: info@coffeeshop.com</p>
+                    <p class="mb-2">Komp taman citra, Jl. Sultan Adam Jl. Malkon Temon 60122 Banjarmasin Kalimantan Selatan</p>
+                    <p class="mb-2">Phone: 0877-2175-4085</p>
+                    <p class="mb-4">Instagram: @area.koffie</p>
                     <h3 class="text-xl font-semibold mb-4">Opening Hours</h3>
-                    <p class="mb-2">Monday - Friday: 7:00 AM - 8:00 PM</p>
-                    <p class="mb-2">Saturday - Sunday: 8:00 AM - 9:00 PM</p>
+                    <p class="mb-2">Monday - Friday: 12:00 PM - 23:00 PM</p>
+                    <p class="mb-2">Saturday - Sunday: 12:00 PM - 00:00 PM</p>
                 </div>
             </div>
         </div>
